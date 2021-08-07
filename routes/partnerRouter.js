@@ -56,7 +56,7 @@ partnerRouter
             `POST operation not supported on /partners/${req.params.partnerId}`
         );
     })
-    .put(authenticate.verifyUser, (req, res, next) => {
+    .put(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Partner.findByIdAndUpdate(
             req.params.partnerId,
             {
@@ -71,7 +71,7 @@ partnerRouter
             })
             .catch((err) => next(err));
     })
-    .delete(authenticate.verifyUser, (req, res, next) => {
+    .delete(authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Partner.findByIdAndDelete(req.params.partnerId)
             .then((response) => {
                 res.statusCode = 200;
